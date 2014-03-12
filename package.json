@@ -1,0 +1,23 @@
+{
+  "name": "broccoli-requirejs",
+  "version": "0.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aaronshaf/broccoli-requirejs.git"
+  },
+  "author": "Aaron Shafovaloff <aaronshaf@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aaronshaf/broccoli-requirejs/issues"
+  },
+  "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
+  "dependencies": {
+    "broccoli-transform": "~0.1.1",
+    "requirejs": "~2.1.11",
+    "mkdirp": "~0.3.5",
+    "rsvp": "~3.0.6",
+    "broccoli": "~0.3.0",
+    "lodash": "~2.4.1"
+  }
+}
