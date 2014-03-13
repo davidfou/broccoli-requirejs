@@ -1,5 +1,5 @@
 module.exports = function (broccoli) {
-  var optimizeRequireJs = require('../lib/index.js');
+  var optimizeRequireJs = require('../index.js');
 
   var tree = broccoli.makeTree('bundle');
 
@@ -12,11 +12,6 @@ module.exports = function (broccoli) {
       out: 'bundle.js'
     }
   });
-
- // styles = pickFiles(styles, {
- //    srcDir: '/',
- //    destDir: 'appkit'
- //  })
 
   return [tree];
 };
