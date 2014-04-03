@@ -22,7 +22,11 @@ RequireJsFilter.prototype.transform = function (srcDir, destDir) {
   var options = this.options;
   var requirejs_options = options.requirejs || {};
 
-  requirejs_options.baseUrl = srcDir;
+  if (requirejs_options.baseUrl) {
+    requirejs_options.baseUrl = path.join(srcDir, requirejs_options.baseUrl);
+  } else {
+    requirejs_options.baseUrl = srcDir;
+  }
 
   return new RSVP.Promise(function(resolve, reject) {
     var tmp_options = _.clone(requirejs_options);
