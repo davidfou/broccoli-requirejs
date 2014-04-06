@@ -17,7 +17,7 @@
     "requirejs": "~2.1.11",
     "mkdirp": "~0.3.5",
     "rsvp": "~3.0.6",
-    "broccoli": "~0.3.0",
+    "broccoli": "~0.7.0",
     "lodash": "~2.4.1"
   }
 }
