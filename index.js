@@ -22,15 +22,17 @@ RequireJsFilter.prototype.transform = function (srcDir, destDir) {
   var options = this.options;
   var requirejs_options = options.requirejs || {};
 
-  if (requirejs_options.baseUrl) {
-    requirejs_options.baseUrl = path.join(srcDir, requirejs_options.baseUrl);
-  } else {
-    requirejs_options.baseUrl = srcDir;
-  }
-
   return new RSVP.Promise(function(resolve, reject) {
     var tmp_options = _.clone(requirejs_options);
+
+    if (requirejs_options.baseUrl) {
+        tmp_options.baseUrl = path.join(srcDir, requirejs_options.baseUrl);
+    } else {
+        tmp_options.baseUrl = srcDir;
+    }
+
     tmp_options.out = path.join(destDir,requirejs_options.out);
+
     requirejs.optimize(tmp_options, function (buildResponse) {
       resolve(destDir);
     });
