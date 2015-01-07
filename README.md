@@ -1,4 +1,6 @@
-# brocolli-requirejs
+# brocolli-requirejs-fc
+
+Forked from [brocolli-requirejs](https://github.com/aaronshaf/broccoli-requirejs)
 
 ## Install
 
