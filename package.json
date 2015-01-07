@@ -1,17 +1,17 @@
 {
-  "name": "broccoli-requirejs",
+  "name": "broccoli-requirejs-fc",
   "version": "0.1.0",
-  "description": "RequireJS plugin for Broccoli",
+  "description": "RequireJS plugin for Broccoli. Fork adding module support",
   "repository": {
     "type": "git",
-    "url": "git://github.com/aaronshaf/broccoli-requirejs.git"
+    "url": "https://github.com/robertinglin/broccoli-requirejs-fc.git"
   },
-  "author": "Aaron Shafovaloff <aaronshaf@gmail.com>",
+  "author": "Robert Inglin <robert@ingl.in>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aaronshaf/broccoli-requirejs/issues"
+    "url": "https://github.com/robertinglin/broccoli-requirejs-fc/issues"
   },
-  "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
+  "homepage": "https://github.com/robertinglin/broccoli-requirejs-fc",
   "dependencies": {
     "broccoli-transform": "~0.1.1",
     "requirejs": "~2.1.11",
