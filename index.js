@@ -35,6 +35,10 @@ RequireJsFilter.prototype.transform = function (srcDir, destDir) {
       tmp_options.mainConfigFile = path.join(srcDir, requirejs_options.mainConfigFile);
     }
 
+    if (requirejs_options.exclude) {
+      tmp_options.exclude = requirejs_options.exclude;
+    }
+
     tmp_options.out = path.join(destDir,requirejs_options.out);
 
     requirejs.optimize(tmp_options, function (buildResponse) {
