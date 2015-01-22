@@ -1,7 +1,6 @@
-var Transform = require('broccoli-transform');
+var Writer = require('broccoli-writer');
 var RSVP = require('rsvp');
 var requirejs = require('requirejs');
-var mkdirp = require('mkdirp');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -15,32 +14,43 @@ function RequireJsFilter(inputTree, options) {
   this.options = options || {};
 }
 
-RequireJsFilter.prototype = Object.create(Transform.prototype);
+RequireJsFilter.prototype = Object.create(Writer.prototype);
 RequireJsFilter.prototype.constructor = RequireJsFilter;
 
-RequireJsFilter.prototype.transform = function (srcDir, destDir) {
-  var options = this.options;
-  var requirejs_options = options.requirejs || {};
+RequireJsFilter.prototype.write = function (readTree, destDir) {
+  var options = _.cloneDeep(this.options.requirejs) || {};
 
-  return new RSVP.Promise(function(resolve, reject) {
-    var tmp_options = _.clone(requirejs_options);
+  return readTree(this.inputTree).then(function (srcDir) {
+    var appDir = options.appDir;
+    options.appDir = appDir ? path.join(srcDir, appDir) : srcDir;
 
-    if (requirejs_options.baseUrl) {
-        tmp_options.baseUrl = path.join(srcDir, requirejs_options.baseUrl);
-    } else {
-        tmp_options.baseUrl = srcDir;
+    var dir = options.dir;
+    options.dir = dir ? path.join(destDir, dir) : destDir;
+
+    if (options.mainConfigFile) {
+      options.mainConfigFile = path.join(srcDir, options.mainConfigFile);
     }
 
-    if (requirejs_options.mainConfigFile) {
-      tmp_options.mainConfigFile = path.join(srcDir, requirejs_options.mainConfigFile);
+    if (options.out) {
+      options.out = path.join(destDir, options.out);
     }
 
-    tmp_options.out = path.join(destDir,requirejs_options.out);
+    if (options.wrap) {
+      if (options.wrap.startFile) {
+        options.wrap.startFile = path.join(srcDir, options.wrap.startFile);
+      }
+      if (options.wrap.endFile) {
+        options.wrap.endFile = path.join(srcDir, options.wrap.endFile);
+      }
+    }
 
-    requirejs.optimize(tmp_options, function (buildResponse) {
-      resolve(destDir);
+    return new RSVP.Promise(function(resolve, reject) {
+      requirejs.optimize(options, function (output) {
+        console.log(output);
+        resolve(output);
+      }, reject);
     });
-  }.bind(this));
+  });
 };
 
 module.exports = RequireJsFilter;
