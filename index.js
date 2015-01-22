@@ -14,6 +14,17 @@ function RequireJsFilter(inputTree, options) {
   this.options = options || {};
 }
 
+function alwaysPrepend (options, propertyName, value) {
+  var currentValue = options[propertyName];
+  options[propertyName] = currentValue ? path.join(value, currentValue) : value;
+}
+
+function prependIfNotEmpty (options, propertyName, value) {
+  if (options[propertyName]) {
+    options[propertyName] = path.join(value, options[propertyName]);
+  }
+}
+
 RequireJsFilter.prototype = Object.create(Writer.prototype);
 RequireJsFilter.prototype.constructor = RequireJsFilter;
 
@@ -21,27 +32,19 @@ RequireJsFilter.prototype.write = function (readTree, destDir) {
   var options = _.cloneDeep(this.options.requirejs) || {};
 
   return readTree(this.inputTree).then(function (srcDir) {
-    var appDir = options.appDir;
-    options.appDir = appDir ? path.join(srcDir, appDir) : srcDir;
-
-    var dir = options.dir;
-    options.dir = dir ? path.join(destDir, dir) : destDir;
-
-    if (options.mainConfigFile) {
-      options.mainConfigFile = path.join(srcDir, options.mainConfigFile);
-    }
-
     if (options.out) {
-      options.out = path.join(destDir, options.out);
+      prependIfNotEmpty(options, 'out', destDir);
+      alwaysPrepend(options, 'baseUrl', srcDir);
+    } else {
+      alwaysPrepend(options, 'dir', destDir);
+      alwaysPrepend(options, 'appDir', srcDir);
     }
+
+    prependIfNotEmpty(options, 'mainConfigFile', srcDir);
 
     if (options.wrap) {
-      if (options.wrap.startFile) {
-        options.wrap.startFile = path.join(srcDir, options.wrap.startFile);
-      }
-      if (options.wrap.endFile) {
-        options.wrap.endFile = path.join(srcDir, options.wrap.endFile);
-      }
+      prependIfNotEmpty(options.wrap, 'startFile', srcDir);
+      prependIfNotEmpty(options.wrap, 'endFile', srcDir);
     }
 
     return new RSVP.Promise(function(resolve, reject) {
