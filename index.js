@@ -1,7 +1,6 @@
-var Transform = require('broccoli-transform');
+var Writer = require('broccoli-writer');
 var RSVP = require('rsvp');
 var requirejs = require('requirejs');
-var mkdirp = require('mkdirp');
 var fs = require('fs');
 var path = require('path');
 var _ = require('lodash');
@@ -15,14 +14,14 @@ function RequireJsFilter(inputTree, options) {
   this.options = options || {};
 }
 
-RequireJsFilter.prototype = Object.create(Transform.prototype);
+RequireJsFilter.prototype = Object.create(Writer.prototype);
 RequireJsFilter.prototype.constructor = RequireJsFilter;
 
-RequireJsFilter.prototype.transform = function (srcDir, destDir) {
+RequireJsFilter.prototype.write = function (readTree, destDir) {
   var options = this.options;
   var requirejs_options = options.requirejs || {};
 
-  return new RSVP.Promise(function(resolve, reject) {
+  return readTree(this.inputTree).then(function (srcDir) {
     var tmp_options = _.clone(requirejs_options);
 
     if (requirejs_options.baseUrl) {
@@ -37,10 +36,12 @@ RequireJsFilter.prototype.transform = function (srcDir, destDir) {
 
     tmp_options.out = path.join(destDir,requirejs_options.out);
 
-    requirejs.optimize(tmp_options, function (buildResponse) {
-      resolve(destDir);
-    });
-  }.bind(this));
+    return new RSVP.Promise(function(resolve, reject) {
+      requirejs.optimize(tmp_options, function (buildResponse) {
+        resolve(destDir);
+      }, reject);
+    }.bind(this));
+  });
 };
 
 module.exports = RequireJsFilter;
