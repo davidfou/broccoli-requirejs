@@ -13,10 +13,9 @@
   },
   "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
   "dependencies": {
-    "broccoli-transform": "~0.1.1",
-    "requirejs": "~2.1.11",
-    "mkdirp": "~0.3.5",
-    "rsvp": "~3.0.6",
-    "lodash": "~2.4.1"
+    "broccoli-writer": "^0.1.1",
+    "lodash": "~2.4.1",
+    "requirejs": "~2.1.15",
+    "rsvp": "~3.0.16"
   }
 }
