@@ -33,18 +33,15 @@ RequireJsFilter.prototype.write = function (readTree, destDir) {
   return readTree(this.inputTree).then(function (srcDir) {
     var child = fork(path.join(__dirname, 'run_optimizer.js'), {
       cwd    : srcDir,
-      silent : true
+      silent : !filterOptions.verbose
     });
 
     return new RSVP.Promise(function(resolve, reject) {
       child.on('message', function(message){
         if (message.isSuccess) {
-          if (filterOptions.verbose)
-            console.log(message.output);
           resolve(this);
         } else
-          console.log(message.output);
-          reject();
+          reject(new Error(message.output));
       });
 
       child.send(options);
