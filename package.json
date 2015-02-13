@@ -11,6 +11,9 @@
   "bugs": {
     "url": "https://github.com/aaronshaf/broccoli-requirejs/issues"
   },
+  "keywords": [
+    "broccoli-plugin"
+  ],
   "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
   "dependencies": {
     "broccoli-writer": "^0.1.1",
