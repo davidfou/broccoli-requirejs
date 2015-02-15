@@ -31,7 +31,7 @@ RequireJsFilter.prototype.write = function (readTree, destDir) {
   });
 
   return readTree(this.inputTree).then(function (srcDir) {
-    var child = fork(path.join(__dirname, 'run_optimizer.js'), {
+    var child = fork(path.join(__dirname, 'run_optimizer.js'), [], {
       cwd    : srcDir,
       silent : !filterOptions.verbose
     });
