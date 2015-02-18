@@ -1,6 +1,6 @@
 {
   "name": "broccoli-requirejs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "RequireJS plugin for Broccoli",
   "repository": {
     "type": "git",
@@ -12,7 +12,11 @@
     "url": "https://github.com/aaronshaf/broccoli-requirejs/issues"
   },
   "keywords": [
-    "broccoli-plugin"
+    "broccoli-plugin",
+    "requirejs",
+    "require.js",
+    "r.js",
+    "optimizer"
   ],
   "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
   "dependencies": {
