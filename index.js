@@ -1,9 +1,9 @@
 var Writer    = require('broccoli-writer');
 var RSVP      = require('rsvp');
 var fork      = require('child_process').fork;
-var fs        = require('fs');
 var path      = require('path');
 var _         = require('lodash');
+var serialize = require('serialize-javascript');
 
 function RequireJsFilter(inputTree, options) {
   if (!(this instanceof RequireJsFilter)) {
@@ -19,15 +19,16 @@ RequireJsFilter.prototype.constructor = RequireJsFilter;
 
 RequireJsFilter.prototype.write = function (readTree, destDir) {
   var filterOptions = _.omit(this.options, 'requirejs');
-  _(filterOptions).defaults({
+  _.defaults(filterOptions, {
     verbose: false
   });
 
   var options = _.cloneDeep(this.options.requirejs) || {};
 
-  _(['dir', 'out']).forEach( function(key) {
-    if (options[key])
+  _.forEach(['dir', 'out'], function(key) {
+    if (options[key]) {
       options[key] = path.join(destDir, options[key]);
+    }
   });
 
   return readTree(this.inputTree).then(function (srcDir) {
@@ -40,11 +41,12 @@ RequireJsFilter.prototype.write = function (readTree, destDir) {
       child.on('message', function(message){
         if (message.isSuccess) {
           resolve(this);
-        } else
+        } else {
           reject(new Error(message.output));
+        }
       });
 
-      child.send(options);
+      child.send('options = ' + serialize(options));
     });
   });
 };

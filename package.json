@@ -8,6 +8,10 @@
   },
   "author": "Aaron Shafovaloff <aaronshaf@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "pretest": "npm install",
+    "test": "node_modules/mocha/bin/mocha"
+  },
   "bugs": {
     "url": "https://github.com/aaronshaf/broccoli-requirejs/issues"
   },
@@ -20,9 +24,19 @@
   ],
   "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
   "dependencies": {
-    "broccoli-writer": "^0.1.1",
-    "lodash": "~2.4.1",
-    "requirejs": "~2.1.15",
-    "rsvp": "~3.0.16"
+    "broccoli-writer": "~0.1.1",
+    "lodash": "~3.8.0",
+    "requirejs": "~2.1.0",
+    "rsvp": "~3.0.16",
+    "serialize-javascript": "~1.0.0"
+  },
+  "devDependencies": {
+    "broccoli": "~0.16.0",
+    "broccoli-funnel": "~0.2.3",
+    "expect.js": "~0.3.1",
+    "fs-extra": "~0.18.2",
+    "mocha": "~2.2.4",
+    "mocha-jshint": "~2.2.2",
+    "temp": "~0.8.1"
   }
 }

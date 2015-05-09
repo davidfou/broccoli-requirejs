@@ -9,7 +9,7 @@ function success(buildResponse) {
 }
 
 function error(err) {
-  err = err || {}
+  err = err || {};
   process.send({
     isSuccess: false,
     output: err.message
@@ -17,6 +17,8 @@ function error(err) {
   process.exit();
 }
 
-process.on('message', function(options) {
+process.on('message', function(m) {
+  var options;
+  eval(m); // jshint ignore:line
   requirejs.optimize(options, success, error);
 });

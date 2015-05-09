@@ -1,0 +1,13 @@
+{
+  "curly":     true,
+  "node":      true,
+  "mocha":     true,
+  "eqeqeq":    true,
+  "undef":     true,
+  "unused":    true,
+  "onecase":   true,
+  "lastsemic": true,
+  "globals": {
+    "define": true
+  }
+}

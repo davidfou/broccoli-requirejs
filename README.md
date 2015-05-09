@@ -26,6 +26,16 @@ tree = optimizeRequireJs('lib', {
 });
 ```
 
+## ZOMG!!! TESTS?!?!!?
+
+I know, right?
+
+Running the tests:
+
+```bash
+npm test
+```
+
 ## License
 
-MIT
+This project is distributed under the MIT license.
