@@ -1,6 +1,6 @@
 {
   "name": "broccoli-requirejs",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "engines": { "node" : ">=0.10 <=0.12" },
   "description": "RequireJS plugin for Broccoli",
   "repository": {
