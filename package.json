@@ -4,16 +4,17 @@
   "description": "RequireJS plugin for Broccoli",
   "repository": {
     "type": "git",
-    "url": "git://github.com/aaronshaf/broccoli-requirejs.git"
+    "url": "git://github.com/dfournier/broccoli-requirejs.git"
   },
-  "author": "Aaron Shafovaloff <aaronshaf@gmail.com>",
+  "author": "David Fournier <fr.david.fournier@gmail.com>",
+  "contributors": ["Aaron Shafovaloff <aaronshaf@gmail.com>"],
   "license": "MIT",
   "scripts": {
     "pretest": "npm install",
     "test": "node_modules/mocha/bin/mocha"
   },
   "bugs": {
-    "url": "https://github.com/aaronshaf/broccoli-requirejs/issues"
+    "url": "https://github.com/dfournier/broccoli-requirejs/issues"
   },
   "keywords": [
     "broccoli-plugin",
@@ -22,7 +23,7 @@
     "r.js",
     "optimizer"
   ],
-  "homepage": "https://github.com/aaronshaf/broccoli-requirejs",
+  "homepage": "https://github.com/dfournier/broccoli-requirejs",
   "dependencies": {
     "broccoli-writer": "~0.1.1",
     "lodash": "~3.8.0",
