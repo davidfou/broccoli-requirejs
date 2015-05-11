@@ -1,4 +1,4 @@
-# brocolli-requirejs
+# broccoli-requirejs
 [![Build Status](https://travis-ci.org/dfournier/broccoli-requirejs.svg?branch=master)](https://travis-ci.org/dfournier/broccoli-requirejs)
 
 ## Install
