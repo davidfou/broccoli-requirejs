@@ -26,7 +26,7 @@
   ],
   "homepage": "https://github.com/dfournier/broccoli-requirejs",
   "dependencies": {
-    "broccoli-writer": "~0.1.1",
+    "broccoli-caching-writer": "~0.5.5",
     "lodash": "~3.8.0",
     "requirejs": "~2.1.0",
     "rsvp": "~3.0.16",

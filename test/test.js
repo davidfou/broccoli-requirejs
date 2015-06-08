@@ -59,7 +59,7 @@ describe('broccoli-requirejs', function() {
     });
 
     it("writes the results in the good repository", function() {
-      var basePath = path.join(builder.tree.tmpDestDir, 'dist');
+      var basePath = path.join(builder.tree.tmpCacheDir, 'dist');
       expect(fs.existsSync(path.join(basePath, 'bundle.js'))).to.be.ok();
       expect(fs.existsSync(path.join(basePath, 'bundle.js.map'))).to.be.ok();
     });
@@ -88,7 +88,7 @@ describe('broccoli-requirejs', function() {
     });
 
     it('copies all files except ones matching the regular expression', function() {
-      var basePath = path.join(builder.tree.tmpDestDir);
+      var basePath = path.join(builder.tree.tmpCacheDir);
       console.log(fs.readdirSync(basePath));
       expect(fs.existsSync(path.join(basePath, 'useless.js'))).to.not.be.ok();
       expect(fs.existsSync(path.join(basePath, 'unused.js'))).to.be.ok();
