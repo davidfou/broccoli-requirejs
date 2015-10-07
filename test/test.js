@@ -4,14 +4,14 @@ var expect   = require('expect.js');
 var fs       = require('fs-extra');
 var _        = require('lodash');
 var temp     = require('temp').track();
-
-var BroccoliRequireJs = require('..');
+var sinon    = require('sinon');
 
 var srcDir = temp.mkdirSync('src');
 fs.copySync(path.join(__dirname, 'fixtures'), srcDir);
 
 
 function build(config, done, callback) {
+  var BroccoliRequireJs = require('..');
   var tree = new BroccoliRequireJs(srcDir, config);
   var builder = new broccoli.Builder(tree);
   builder.build().then(function(results) {callback(tree, results);})
@@ -28,9 +28,10 @@ describe('broccoli-requirejs', function() {
 
   describe('runs requireJs and use the right inputs and outputs', function() {
     var now = new Date();
-    var builder;
+    var builder, forkSpy;
 
     before(function(done) {
+      forkSpy = sinon.spy(require('child_process'), 'fork');
       var config = {
         requirejs : {
           optimize: "none",
@@ -46,6 +47,7 @@ describe('broccoli-requirejs', function() {
     });
 
     after(function() {
+      require('child_process').fork.restore();
       builder.cleanup();
     });
 
@@ -62,6 +64,11 @@ describe('broccoli-requirejs', function() {
       var basePath = path.join(builder.tree.tmpCacheDir, 'dist');
       expect(fs.existsSync(path.join(basePath, 'bundle.js'))).to.be.ok();
       expect(fs.existsSync(path.join(basePath, 'bundle.js.map'))).to.be.ok();
+    });
+
+    it("kills the child process", function() {
+      expect(forkSpy.called).to.be.ok();
+      expect(forkSpy.returnValues[0].connected).to.not.be.ok();
     });
   });
 
