@@ -5,7 +5,6 @@ function success(buildResponse) {
     isSuccess: true,
     output: buildResponse
   });
-  process.exit();
 }
 
 function error(err) {
@@ -14,7 +13,6 @@ function error(err) {
     isSuccess: false,
     output: err.message
   });
-  process.exit();
 }
 
 process.on('message', function(m) {

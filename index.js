@@ -39,6 +39,7 @@ RequireJsFilter.prototype.updateCache = function(srcDir, destDir) {
 
   return new RSVP.Promise(function(resolve, reject) {
     child.on('message', function(message){
+      child.kill();
       if (message.isSuccess) {
         resolve(this);
       } else {
