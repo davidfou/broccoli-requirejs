@@ -2,7 +2,6 @@ var broccoli = require('broccoli');
 var path     = require('path');
 var expect   = require('expect.js');
 var fs       = require('fs-extra');
-var _        = require('lodash');
 var temp     = require('temp').track();
 var sinon    = require('sinon');
 
@@ -54,14 +53,14 @@ describe('broccoli-requirejs', function() {
     var srcFiles = ['index.js', 'foo.js', 'bar.js'];
 
     it("doesn't modifed source files", function() {
-      _.forEach(srcFiles, function(file) {
+      srcFiles.forEach(function(file) {
         var srcMtime = fs.statSync(path.join(srcDir, file)).mtime;
         expect(srcMtime < now).to.be.ok();
       });
     });
 
     it("writes the results in the good repository", function() {
-      var basePath = path.join(builder.tree.tmpCacheDir, 'dist');
+      var basePath = path.join(builder.tree.outputPath, 'dist');
       expect(fs.existsSync(path.join(basePath, 'bundle.js'))).to.be.ok();
       expect(fs.existsSync(path.join(basePath, 'bundle.js.map'))).to.be.ok();
     });
@@ -95,8 +94,7 @@ describe('broccoli-requirejs', function() {
     });
 
     it('copies all files except ones matching the regular expression', function() {
-      var basePath = path.join(builder.tree.tmpCacheDir);
-      console.log(fs.readdirSync(basePath));
+      var basePath = path.join(builder.tree.outputPath);
       expect(fs.existsSync(path.join(basePath, 'useless.js'))).to.not.be.ok();
       expect(fs.existsSync(path.join(basePath, 'unused.js'))).to.be.ok();
     });

@@ -1,46 +1,53 @@
-var CachingWriter    = require('broccoli-caching-writer');
-var RSVP      = require('rsvp');
-var fork      = require('child_process').fork;
-var path      = require('path');
-var _         = require('lodash');
+var CachingWriter = require('broccoli-caching-writer');
+var RSVP = require('rsvp');
+var fork = require('child_process').fork;
+var path = require('path');
 var serialize = require('serialize-javascript');
-
-function RequireJsFilter(inputTree, options) {
-  if (!(this instanceof RequireJsFilter)) {
-    return new RequireJsFilter(inputTree, options);
-  }
-  CachingWriter.apply(this, arguments);
-
-  this.inputTree = inputTree;
-  this.options = options || {};
-}
 
 RequireJsFilter.prototype = Object.create(CachingWriter.prototype);
 RequireJsFilter.prototype.constructor = RequireJsFilter;
+function RequireJsFilter(inputTree, options) {
+  if (Array.isArray(inputTree)) {
+    throw new Error('Expected a tree and not an array as first argument');
+  }
 
-RequireJsFilter.prototype.updateCache = function(srcDir, destDir) {
-  var filterOptions = _.omit(this.options, 'requirejs');
-  _.defaults(filterOptions, {
-    verbose: false
+  this.options = options || {};
+  CachingWriter.call(this, [inputTree], {
+    name: 'RequireJS filter',
+    annotation: this.options.annotation,
+    cacheInclude: this.options.cacheInclude,
+    cacheExclude: this.options.cacheExclude
   });
+}
 
-  var options = _.cloneDeep(this.options.requirejs) || {};
+RequireJsFilter.prototype.build = function() {
+  var requirejsOptions = this.options.requirejs || {};
+  var verbose = false;
+  if (typeof this.options.verbose === "boolean") {
+    verbose = this.options.verbose;
+  }
 
-  _.forEach(['dir', 'out'], function(key) {
-    if (options[key]) {
-      options[key] = path.join(destDir, options[key]);
+  var options = {};
+  for (var prop in requirejsOptions) {
+    if (prop === 'dir' || prop === 'out') {
+      options[prop] = path.join(this.outputPath, requirejsOptions[prop]);
+    } else {
+      options[prop] = requirejsOptions[prop];
     }
-  });
+  }
 
   var child = fork(path.join(__dirname, 'run_optimizer.js'), [], {
-    cwd    : srcDir[0],
-    silent : !filterOptions.verbose
+    cwd: this.inputPaths[0],
+    silent: verbose
   });
 
   return new RSVP.Promise(function(resolve, reject) {
     child.on('message', function(message){
       child.kill();
       if (message.isSuccess) {
+        if (verbose) {
+          console.log(message.output);
+        }
         resolve(this);
       } else {
         reject(new Error(message.output));
