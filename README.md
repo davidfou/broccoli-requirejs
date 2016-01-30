@@ -9,16 +9,18 @@ npm install --save-dev broccoli-requirejs
 
 ## options
 
-| Key         | Type                      | Description                                                      |
-|-------------|---------------------------|------------------------------------------------------------------|
-| `verbose`   | Boolean (default `false`) | Prints the result of the optimization                            |
-| `requirejs` | Object                    | RequireJS options, `out` or `dir` is used to set the output tree |
+| Key            | Mandatory | Type                      | Description                                                                                           |
+|:---            |   :---:   | :---                      | :---                                                                                                  |
+| `verbose`      |   :-1:    | Boolean (default `false`) | Prints the result of the optimization                                                                 |
+| `cacheInclude` |   :-1:    | Array                     | See (CachingWriter documentation)[https://github.com/ember-cli/broccoli-caching-writer#documentation] |
+| `cacheExclude` |   :-1:    | Array                     | See (CachingWriter documentation)[https://github.com/ember-cli/broccoli-caching-writer#documentation] |
+| `requirejs`    |   :+1:    | Object                    | RequireJS options, `out` or `dir` is used to set the output tree                                      |
 
 ## Example
 
 ```js
-var optimizeRequireJs = require('broccoli-requirejs');
-tree = optimizeRequireJs('lib', {
+var RequireJs = require('broccoli-requirejs');
+var tree = new RequireJS('lib', {
   verbose   : true,
   requirejs : {
     name : 'index',
